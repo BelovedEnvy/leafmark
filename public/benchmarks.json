@@ -1,0 +1,48 @@
+{
+  "fingerprint": "6bac4400e784db8a535301f7127287d9b33a3ab5588ffc577a92661baed9d0b1",
+  "models": {
+    "embedding": "@cf/google/embeddinggemma-2",
+    "reranker": "@cf/baai/bge-reranker-base",
+    "language": "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+  },
+  "completed_at": "2026-11-23T23:21:50.692Z",
+  "questions": 30,
+  "rows": [
+    {
+      "variant": "Fixed 0%",
+      "hit_rate": 0.9166666666666666,
+      "mrr": 0.7986111111111112,
+      "faithfulness": 0.9545454545454546,
+      "quote_verification": 1,
+      "abstention_accuracy": 1,
+      "avg_latency_ms": 4762
+    },
+    {
+      "variant": "Fixed 15%",
+      "hit_rate": 0.9166666666666666,
+      "mrr": 0.7916666666666666,
+      "faithfulness": 0.9565217391304348,
+      "quote_verification": 0.9696969696969697,
+      "abstention_accuracy": 1,
+      "avg_latency_ms": 4751
+    },
+    {
+      "variant": "Semantic",
+      "hit_rate": 0.9166666666666666,
+      "mrr": 0.875,
+      "faithfulness": 0.9565217391304348,
+      "quote_verification": 1,
+      "abstention_accuracy": 1,
+      "avg_latency_ms": 3932
+    },
+    {
+      "variant": "Semantic + hybrid + reranker",
+      "hit_rate": 0.9583333333333334,
+      "mrr": 0.8784722222222222,
+      "faithfulness": 0.9411764705882353,
+      "quote_verification": 1,
+      "abstention_accuracy": 1,
+      "avg_latency_ms": 4572
+    }
+  ]
+}

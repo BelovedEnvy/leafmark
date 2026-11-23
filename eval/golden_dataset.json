@@ -1,0 +1,546 @@
+[
+  {
+    "id": "ABK-01",
+    "question": "How should a visitor enter the station for an ordinary visit?",
+    "kind": "answerable",
+    "expected_answer": "Use the north footbridge.",
+    "expected_pages": [
+      2
+    ],
+    "keywords": [
+      "north footbridge"
+    ],
+    "supporting_passages": [
+      {
+        "page": 2,
+        "quote": "Use the north footbridge for routine access."
+      }
+    ]
+  },
+  {
+    "id": "ABK-02",
+    "question": "On which side of the staff gauge should I read the stream, and how precisely?",
+    "kind": "answerable",
+    "expected_answer": "Read the east face to the nearest centimetre.",
+    "expected_pages": [
+      3
+    ],
+    "keywords": [
+      "east face",
+      "centimetre"
+    ],
+    "supporting_passages": [
+      {
+        "page": 3,
+        "quote": "Read the water line against the east face of the staff gauge."
+      },
+      {
+        "page": 3,
+        "quote": "Record the water level to the nearest centimetre."
+      }
+    ]
+  },
+  {
+    "id": "ABK-03",
+    "question": "How often does the water-level logger take a reading?",
+    "kind": "answerable",
+    "expected_answer": "Every 15 minutes, on the quarter hour in UTC.",
+    "expected_pages": [
+      4
+    ],
+    "keywords": [
+      "15-minute",
+      "UTC"
+    ],
+    "supporting_passages": [
+      {
+        "page": 4,
+        "quote": "Program the water-level logger for a 15-minute interval."
+      },
+      {
+        "page": 4,
+        "quote": "Align readings to the quarter hour in UTC."
+      }
+    ]
+  },
+  {
+    "id": "ABK-04",
+    "question": "What battery load did the archive record at 07:00 UTC on 8 April 2025?",
+    "kind": "answerable",
+    "expected_answer": "The 07:00 entry on 8 April 2025 records a load of 12.23 volts.",
+    "expected_pages": [
+      21
+    ],
+    "keywords": [
+      "07:00",
+      "12.23"
+    ],
+    "supporting_passages": [
+      {
+        "page": 21,
+        "quote": "07:00 41.0 41 8.3 12.23"
+      }
+    ]
+  },
+  {
+    "id": "ABK-05",
+    "question": "What volume of water goes into the rain collector's functional check?",
+    "kind": "answerable",
+    "expected_answer": "Use 100 millilitres of clean water.",
+    "expected_pages": [
+      5
+    ],
+    "keywords": [
+      "100 millilitres",
+      "clean water"
+    ],
+    "supporting_passages": [
+      {
+        "page": 5,
+        "quote": "The reference pour is 100 millilitres of clean water."
+      }
+    ]
+  },
+  {
+    "id": "ABK-06",
+    "question": "How does a later analyst distinguish the funnel test from rainfall?",
+    "kind": "answerable",
+    "expected_answer": "Use the start and end times of the pour flagged in the event ledger.",
+    "expected_pages": [
+      5
+    ],
+    "keywords": [
+      "start and end time",
+      "event ledger"
+    ],
+    "supporting_passages": [
+      {
+        "page": 5,
+        "quote": "When the test finishes, flag the start and end time of the pour in the event ledger."
+      }
+    ]
+  },
+  {
+    "id": "ABK-07",
+    "question": "When should I repeat the thermometer comparison?",
+    "kind": "answerable",
+    "expected_answer": "Repeat when the difference is greater than 0.4 degrees Celsius.",
+    "expected_pages": [
+      6
+    ],
+    "keywords": [
+      "0.4 degrees Celsius"
+    ],
+    "supporting_passages": [
+      {
+        "page": 6,
+        "quote": "A difference greater than 0.4 degrees Celsius triggers a repeat comparison."
+      }
+    ]
+  },
+  {
+    "id": "ABK-08",
+    "question": "What loaded battery measurement calls for a replacement?",
+    "kind": "answerable",
+    "expected_answer": "Flag a loaded reading below 11.8 volts for exchange.",
+    "expected_pages": [
+      7
+    ],
+    "keywords": [
+      "11.8 volts",
+      "loaded"
+    ],
+    "supporting_passages": [
+      {
+        "page": 7,
+        "quote": "Flag a loaded reading below 11.8 volts for a battery exchange."
+      }
+    ]
+  },
+  {
+    "id": "ABK-09",
+    "question": "What sign do I use if the logger clock is fast?",
+    "kind": "answerable",
+    "expected_answer": "Use a positive sign for a logger ahead of the reference.",
+    "expected_pages": [
+      8
+    ],
+    "keywords": [
+      "positive sign",
+      "ahead"
+    ],
+    "supporting_passages": [
+      {
+        "page": 8,
+        "quote": "Use a positive sign when the logger runs ahead of the reference."
+      }
+    ]
+  },
+  {
+    "id": "ABK-10",
+    "question": "At what clock discrepancy must an observer adjust the logger?",
+    "kind": "answerable",
+    "expected_answer": "Correct the clock when the absolute offset exceeds 30 seconds.",
+    "expected_pages": [
+      8
+    ],
+    "keywords": [
+      "30 seconds",
+      "either direction"
+    ],
+    "supporting_passages": [
+      {
+        "page": 8,
+        "quote": "An offset larger than 30 seconds in either direction requires a clock correction."
+      }
+    ]
+  },
+  {
+    "id": "ABK-11",
+    "question": "In the worked example, what identifier belongs on the second bottle?",
+    "kind": "answerable",
+    "expected_answer": "ABK-20250408-02.",
+    "expected_pages": [
+      9
+    ],
+    "keywords": [
+      "ABK-20250408-02"
+    ],
+    "supporting_passages": [
+      {
+        "page": 9,
+        "quote": "ABK-20250408-02"
+      }
+    ]
+  },
+  {
+    "id": "ABK-12",
+    "question": "Where does the signed custody copy stay after the carrier is collected?",
+    "kind": "answerable",
+    "expected_answer": "Keep the signed lower copy in the station binder.",
+    "expected_pages": [
+      10
+    ],
+    "keywords": [
+      "lower copy",
+      "station binder"
+    ],
+    "supporting_passages": [
+      {
+        "page": 10,
+        "quote": "Keep the signed lower copy in the station binder."
+      }
+    ]
+  },
+  {
+    "id": "ABK-13",
+    "question": "How many routine bottles can be filled before the first duplicate is due?",
+    "kind": "answerable",
+    "expected_answer": "The first duplicate is collected with the fifth routine bottle. Blank and duplicate bottles do not advance the count.",
+    "expected_pages": [
+      11
+    ],
+    "keywords": [
+      "fifth routine bottle",
+      "count"
+    ],
+    "supporting_passages": [
+      {
+        "page": 11,
+        "quote": "Collect a duplicate on every fifth routine bottle."
+      },
+      {
+        "page": 11,
+        "quote": "A blank bottle and a duplicate bottle do not advance that count."
+      }
+    ]
+  },
+  {
+    "id": "ABK-14",
+    "question": "Where should I position the camera for a repeatable channel photograph?",
+    "kind": "answerable",
+    "expected_answer": "Align it with the brass notch on the west parapet.",
+    "expected_pages": [
+      12
+    ],
+    "keywords": [
+      "brass notch",
+      "west parapet"
+    ],
+    "supporting_passages": [
+      {
+        "page": 12,
+        "quote": "Align the camera with the brass notch on the west parapet."
+      }
+    ]
+  },
+  {
+    "id": "ABK-15",
+    "question": "How do I verify the two data copies?",
+    "kind": "answerable",
+    "expected_answer": "Verify each copy against the original with SHA-256 and enter the digest, filename and byte count in the manifest.",
+    "expected_pages": [
+      13
+    ],
+    "keywords": [
+      "SHA-256",
+      "byte count"
+    ],
+    "supporting_passages": [
+      {
+        "page": 13,
+        "quote": "Verify each copy against the original using SHA-256."
+      },
+      {
+        "page": 13,
+        "quote": "Write the digest into the transfer manifest with the filename and byte count."
+      }
+    ]
+  },
+  {
+    "id": "ABK-16",
+    "question": "The archive drive is missing today. Where should the recorder card go?",
+    "kind": "answerable",
+    "expected_answer": "Retain the card and leave its sleeve in the pending tray until the second verified copy can be made.",
+    "expected_pages": [
+      13
+    ],
+    "keywords": [
+      "retain the card",
+      "pending tray"
+    ],
+    "supporting_passages": [
+      {
+        "page": 13,
+        "quote": "If the archive drive is unavailable, retain the card and leave its sleeve in the pending tray."
+      }
+    ]
+  },
+  {
+    "id": "ABK-17",
+    "question": "What should replace a missing water-level reading in the series?",
+    "kind": "answerable",
+    "expected_answer": "Use the literal code GAP and preserve the surrounding timestamps.",
+    "expected_pages": [
+      14
+    ],
+    "keywords": [
+      "GAP",
+      "timestamps"
+    ],
+    "supporting_passages": [
+      {
+        "page": 14,
+        "quote": "Mark missing logger readings with the literal code GAP."
+      },
+      {
+        "page": 14,
+        "quote": "Keep the surrounding timestamps exactly as recorded."
+      }
+    ]
+  },
+  {
+    "id": "ABK-18",
+    "question": "When should the observer order more numbered paper seals?",
+    "kind": "answerable",
+    "expected_answer": "When fewer than twelve intact numbered seals remain in the dry cabinet.",
+    "expected_pages": [
+      15
+    ],
+    "keywords": [
+      "fewer than twelve",
+      "intact"
+    ],
+    "supporting_passages": [
+      {
+        "page": 15,
+        "quote": "Reorder paper seals when fewer than twelve remain."
+      },
+      {
+        "page": 15,
+        "quote": "The count includes intact, numbered seals in the dry cabinet."
+      }
+    ]
+  },
+  {
+    "id": "ABK-19",
+    "question": "Where should the service card's closure date be written before archive transfer?",
+    "kind": "answerable",
+    "expected_answer": "Write it in the upper right corner of the card.",
+    "expected_pages": [
+      16
+    ],
+    "keywords": [
+      "upper right corner"
+    ],
+    "supporting_passages": [
+      {
+        "page": 16,
+        "quote": "Write the closure date in the upper right corner before transferring the completed card to the archive box."
+      }
+    ]
+  },
+  {
+    "id": "ABK-20",
+    "question": "When the station opened on 12 August, what unfinished job was waiting?",
+    "kind": "answerable",
+    "expected_answer": "There was an incomplete transfer in the pending tray, and its recorder card remained in its marked sleeve.",
+    "expected_pages": [
+      30
+    ],
+    "keywords": [
+      "incomplete transfer",
+      "pending tray"
+    ],
+    "supporting_passages": [
+      {
+        "page": 30,
+        "quote": "The opening observer found an incomplete transfer in the pending tray."
+      }
+    ]
+  },
+  {
+    "id": "ABK-21",
+    "question": "Where do we leave the cabinet key when we finish?",
+    "kind": "answerable",
+    "expected_answer": "Put it in the numbered return pouch and enter the pouch number beside the closing signature.",
+    "expected_pages": [
+      20
+    ],
+    "keywords": [
+      "numbered return pouch",
+      "closing signature"
+    ],
+    "supporting_passages": [
+      {
+        "page": 20,
+        "quote": "Leave the cabinet key in the numbered return pouch."
+      },
+      {
+        "page": 20,
+        "quote": "Write the pouch number beside the closing signature."
+      }
+    ]
+  },
+  {
+    "id": "ABK-22",
+    "question": "If two observers leave at different times, who signs the closing line?",
+    "kind": "answerable",
+    "expected_answer": "The last person to secure the hut.",
+    "expected_pages": [
+      20
+    ],
+    "keywords": [
+      "last person",
+      "secure the hut"
+    ],
+    "supporting_passages": [
+      {
+        "page": 20,
+        "quote": "When two people leave separately, the last person to secure the hut signs the closing line."
+      }
+    ]
+  },
+  {
+    "id": "ABK-23",
+    "question": "How long should we keep closed service cards?",
+    "kind": "contradiction",
+    "expected_answer": "The office schedule says five years after closure and the keeper's insert says three. Neither copy is dated or cancelled, so the handbook leaves the conflict unresolved.",
+    "expected_pages": [
+      16,
+      17
+    ],
+    "keywords": [
+      "five years",
+      "three years"
+    ],
+    "supporting_passages": [
+      {
+        "page": 16,
+        "quote": "The office archive schedule retains service cards for five years."
+      },
+      {
+        "page": 17,
+        "quote": "The keeper's insert retains service cards for three years after closure."
+      }
+    ]
+  },
+  {
+    "id": "ABK-24",
+    "question": "Which weekday is the regular bank inspection supposed to happen?",
+    "kind": "contradiction",
+    "expected_answer": "The desk checklist names Monday and the cabinet card names Thursday for the same walkover. The binder contains no signed amendment resolving the conflict.",
+    "expected_pages": [
+      18,
+      19
+    ],
+    "keywords": [
+      "Monday",
+      "Thursday"
+    ],
+    "supporting_passages": [
+      {
+        "page": 18,
+        "quote": "The desk checklist calls for a bank walkover every Monday."
+      },
+      {
+        "page": 19,
+        "quote": "The cabinet card calls for a bank walkover every Thursday."
+      }
+    ]
+  },
+  {
+    "id": "ABK-25",
+    "question": "What is the exact latitude and longitude of the staff gauge?",
+    "kind": "unanswerable",
+    "expected_answer": "Not Found in Document",
+    "expected_pages": [],
+    "keywords": [],
+    "supporting_passages": []
+  },
+  {
+    "id": "ABK-26",
+    "question": "Which manufacturer and model supplied the water-level logger?",
+    "kind": "unanswerable",
+    "expected_answer": "Not Found in Document",
+    "expected_pages": [],
+    "keywords": [],
+    "supporting_passages": []
+  },
+  {
+    "id": "ABK-27",
+    "question": "What is the annual budget for replacement batteries?",
+    "kind": "unanswerable",
+    "expected_answer": "Not Found in Document",
+    "expected_pages": [],
+    "keywords": [],
+    "supporting_passages": []
+  },
+  {
+    "id": "ABK-28",
+    "question": "What concentration of preservative goes into each sample bottle?",
+    "kind": "unanswerable",
+    "expected_answer": "Not Found in Document",
+    "expected_pages": [],
+    "keywords": [],
+    "supporting_passages": []
+  },
+  {
+    "id": "ABK-29",
+    "question": "Which public website publishes the station's live streamflow?",
+    "kind": "unanswerable",
+    "expected_answer": "Not Found in Document",
+    "expected_pages": [],
+    "keywords": [],
+    "supporting_passages": []
+  },
+  {
+    "id": "ABK-30",
+    "question": "What is the receiving clerk's telephone number?",
+    "kind": "unanswerable",
+    "expected_answer": "Not Found in Document",
+    "expected_pages": [],
+    "keywords": [],
+    "supporting_passages": []
+  }
+]

@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.vercel/
+.env*
+!.env.example
+.cache/
+public/pdf.worker.min.mjs
+*.tsbuildinfo
+next-env.d.ts
+

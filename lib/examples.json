@@ -1,0 +1,117 @@
+[
+  {
+    "question": "How should a visitor enter the station for an ordinary visit?",
+    "answer": {
+      "text": "Use the north footbridge. [1]",
+      "citations": [
+        {
+          "id": 1,
+          "page": 2,
+          "chunk_id": "c0001",
+          "verbatim_quote": "Use the north footbridge for routine access.",
+          "boxes": [
+            [
+              0.09215686274509804,
+              0.20839165581597222,
+              0.799678431372548,
+              0.015277777777777779
+            ]
+          ]
+        }
+      ],
+      "groundedness_score": null,
+      "abstained": false,
+      "example": true
+    }
+  },
+  {
+    "question": "On which side of the staff gauge should I read the stream, and how precisely?",
+    "answer": {
+      "text": "Read the east face to the nearest centimetre. [1] [2]",
+      "citations": [
+        {
+          "id": 1,
+          "page": 3,
+          "chunk_id": "c0001",
+          "verbatim_quote": "Read the water line against the east face of the staff gauge.",
+          "boxes": [
+            [
+              0.09215686274509804,
+              0.20839165581597222,
+              0.7685333333333323,
+              0.015277777777777779
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "page": 3,
+          "chunk_id": "c0001",
+          "verbatim_quote": "Record the water level to the nearest centimetre.",
+          "boxes": [
+            [
+              0.09215686274509804,
+              0.25283610026041664,
+              0.7720274509803915,
+              0.015277777777777779
+            ],
+            [
+              0.09215686274509804,
+              0.2750583224826389,
+              0.10667843137254901,
+              0.015277777777777779
+            ]
+          ]
+        }
+      ],
+      "groundedness_score": null,
+      "abstained": false,
+      "example": true
+    }
+  },
+  {
+    "question": "How often does the water-level logger take a reading?",
+    "answer": {
+      "text": "Every 15 minutes, on the quarter hour in UTC. [1] [2]",
+      "citations": [
+        {
+          "id": 1,
+          "page": 4,
+          "chunk_id": "c0002",
+          "verbatim_quote": "Program the water-level logger for a 15-minute interval.",
+          "boxes": [
+            [
+              0.09215686274509804,
+              0.20839165581597222,
+              0.8043588235294109,
+              0.015277777777777779
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "page": 4,
+          "chunk_id": "c0002",
+          "verbatim_quote": "Align readings to the quarter hour in UTC.",
+          "boxes": [
+            [
+              0.09215686274509804,
+              0.20839165581597222,
+              0.8043588235294109,
+              0.015277777777777779
+            ],
+            [
+              0.09215686274509804,
+              0.23061387803819444,
+              0.773709803921568,
+              0.015277777777777779
+            ]
+          ]
+        }
+      ],
+      "groundedness_score": null,
+      "abstained": false,
+      "example": true
+    }
+  }
+]
