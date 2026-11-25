@@ -17,8 +17,10 @@ async function infer(model: string, input: object): Promise<unknown> {
     body: JSON.stringify(input), signal: AbortSignal.timeout(45_000), cache: "no-store",
   });
   const envelope = await response.json().catch(() => null);
-  if (response.status === 429 || envelope?.errors?.some((e: {code:number}) => e.code === 3036))
-    throw new Problem(429, "The inference allowance or rate limit was reached. Try again later.");
+  if (envelope?.errors?.some((e: {code:number;message?:string}) => e.code === 3036 ||
+    (e.code === 4006 && e.message?.includes('daily free allocation'))))
+    throw new Problem(429, "The free inference allowance is exhausted. It resets at 00:00 UTC.");
+  if (response.status === 429) throw new Problem(429, "Inference is temporarily busy. Please try again shortly.");
   if (!response.ok || !envelope?.success) throw new Problem(502, "Inference provider could not complete the request (HTTP " + response.status + ").");
   return envelope.result;
 }

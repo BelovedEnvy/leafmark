@@ -59,7 +59,7 @@ export default function Benchmarks({ answer }: { answer?: Answer }) {
   return (
     <div className="benchmark-content">
       <section className="score-chart">
-        <h3>Current answer groundedness</h3>
+        <h3>Estimated answer groundedness</h3>
         {score == null ? (
           <p className="benchmark-copy">A score appears with a model-generated answer.</p>
         ) : (

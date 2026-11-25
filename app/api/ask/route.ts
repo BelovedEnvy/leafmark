@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { configured,handle,limit,payload,session } from "@/lib/http";
+import { admin,configured,handle,limit,payload,session } from "@/lib/http";
 import { Problem,SAMPLE,type Chunk } from "@/lib/types";
 import { answer } from "@/lib/answer";
 import examples from "@/lib/examples.json";
@@ -19,7 +19,7 @@ export async function POST(req:Request){return handle(async()=>{
   if(!doc) throw new Problem(documentId==="sample"?503:404,documentId==="sample"?"The sample index has not been seeded.":"Document unavailable.");
   await limit(req,"ask",user?.id);
   const result=await answer(question,async(q,v,hybrid)=>{
-    const {data,error}=await db.rpc("search_chunks",{p_doc:id,p_query:q,p_vector:v,p_hybrid:hybrid});
+    const {data,error}=await admin().rpc("search_chunks",{p_doc:id,p_query:q,p_vector:v,p_hybrid:hybrid});
     if(error) throw error;
     return data as Chunk[];
   });

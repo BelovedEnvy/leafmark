@@ -59,9 +59,11 @@ export async function answer(question:string, search:Search, full=true) {
   async function retrieve(q:string) {
     const [v]=await embed(["task: search result | query: "+q]);
     const rows=await search(q,v,full);
-    if(!full) return {chunks:rows.slice(0,5),relevant:true,near:rows};
+    if(!full) return {chunks:rows.slice(0,5),relevant:true,near:rows,trace:[]};
     const ranking=await rerank(q,rows.map(c=>c.body));
-    return {chunks:ranking.map(r=>rows[r.id]),relevant:(ranking[0]?.score??0)>=0.35,near:rows};
+    const trace=ranking.map(r=>({chunk_id:rows[r.id].chunk_id,file_name:rows[r.id].file_name,
+      page:rows[r.id].spans[0]?.page??1,hybrid_rank:r.id+1,reranker_score:r.score}));
+    return {chunks:ranking.map(r=>rows[r.id]),relevant:(ranking[0]?.score??0)>=0.35,near:rows,trace};
   }
   let result=await retrieve(question),rewritten=false;
   if(full && !result.relevant) {
@@ -74,6 +76,8 @@ export async function answer(question:string, search:Search, full=true) {
   const checked=verify(draft,result.chunks);
   const abstained=!checked.text;
   const topics=abstained?[...new Set(result.near.flatMap(c=>c.spans.map(s=>s.text.trim())).filter(t=>t.length>=8 && t.length<=90 && !t.includes("|")))].slice(0,3):[];
-  return {...checked,abstained,topics,rewritten,verification_failed:draft.claims.length>0 && abstained,
+  const citations=checked.citations.map(c=>({...c,file_name:result.trace.find(t=>t.chunk_id===c.chunk_id)?.file_name ?? result.chunks.find(t=>t.chunk_id===c.chunk_id)?.file_name,
+    reranker_score:result.trace.find(t=>t.chunk_id===c.chunk_id)?.reranker_score ?? null}));
+  return {...checked,citations,trace:result.trace,abstained,topics,rewritten,verification_failed:draft.claims.length>0 && abstained,
     text:checked.text || "Not Found in Document",retrieved:result.chunks,latency_ms:Math.round(performance.now()-start)};
 }

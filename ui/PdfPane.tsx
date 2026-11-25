@@ -9,6 +9,8 @@ export type Citation = {
   page: number;
   chunk_id: string;
   verbatim_quote: string;
+  file_name?: string;
+  reranker_score?: number | null;
   boxes: [number, number, number, number][];
 };
 
@@ -117,7 +119,8 @@ export default function PdfPane({
     if (!mark || !view || !painted || citation?.page !== pageNumber) return;
     const top = mark.getBoundingClientRect().top - view.getBoundingClientRect().top;
     if (top < 16 || top > view.clientHeight * 0.8) {
-      view.scrollTop += top - view.clientHeight * 0.35;
+      view.scrollTo({ top: view.scrollTop + top - view.clientHeight * 0.35,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
     }
   }, [selection, citation, painted, pageNumber]);
 

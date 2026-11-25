@@ -7,7 +7,7 @@ import { chunkDocument,tokenCount } from "../lib/chunks";
 import { verify,sourceXml,answer } from "../lib/answer";
 import { models } from "../lib/models";
 import { localDatabase,loadIndex,localSearch } from "./local-db";
-import { firstRelevant,summarize } from "./metrics";
+import { firstRelevant,coversContradiction,summarize } from "./metrics";
 import { SAMPLE,type Span,type Chunk } from "../lib/types";
 import golden from "./golden_dataset.json";
 
@@ -74,6 +74,26 @@ test("CRAG retries once and abstains with actual related text on low relevance",
     if(token===undefined) delete process.env.CLOUDFLARE_API_TOKEN;else process.env.CLOUDFLARE_API_TOKEN=token;
   }
 });
+test("retrieval trace preserves initial rank and reranker score",async()=>{
+  const oldFetch=globalThis.fetch,account=process.env.CLOUDFLARE_ACCOUNT_ID,token=process.env.CLOUDFLARE_API_TOKEN;
+  process.env.CLOUDFLARE_ACCOUNT_ID="0".repeat(32);process.env.CLOUDFLARE_API_TOKEN="test";
+  try {
+    globalThis.fetch=async input=>{
+      const url=String(input);
+      const result=url.endsWith(models.embedding)?{data:[{index:0,embedding:vector()}]}:
+        url.endsWith(models.reranker)?{response:[{id:1,score:.9},{id:0,score:.5}]}:
+        {response:{claims:[{text:'Use the gate.',sources:[{id:1,verbatim_quote:'north gate'}]}],groundedness_score:.9}};
+      return Response.json({success:true,result});
+    };
+    const out=await answer('Which gate?',async()=>[{...chunk,chunk_id:'c0002'},chunk]);
+    assert.deepEqual(out.trace.map(row=>row.hybrid_rank),[2,1]);
+    assert.equal(out.citations[0].reranker_score,.9);
+  } finally {
+    globalThis.fetch=oldFetch;
+    if(account===undefined) delete process.env.CLOUDFLARE_ACCOUNT_ID;else process.env.CLOUDFLARE_ACCOUNT_ID=account;
+    if(token===undefined) delete process.env.CLOUDFLARE_API_TOKEN;else process.env.CLOUDFLARE_API_TOKEN=token;
+  }
+});
 test("PostgreSQL migration, atomic publish, RRF, quota, owner isolation, bucket reservations and deletion",async()=>{
   const db=await localDatabase(),owner="11111111-1111-4111-8111-111111111111",other="22222222-2222-4222-8222-222222222222";
   const item={...chunk,embedding:vector()};
@@ -95,7 +115,7 @@ test("PostgreSQL migration, atomic publish, RRF, quota, owner isolation, bucket 
     assert.equal((await db.query("select * from public.documents")).rows.length,2);
     await db.query("select set_config('request.jwt.claim.sub',$1,false)",[other]);
     assert.equal((await db.query("select * from public.documents")).rows.length,1);
-    assert.equal((await db.query("select * from public.search_chunks($1,'gate',$2,true)",[id,JSON.stringify(vector())])).rows.length,0);
+    await assert.rejects(db.query("select * from public.search_chunks($1,'gate',$2,true)",[id,JSON.stringify(vector())]));
     assert.equal((await db.query("select * from storage.objects")).rows.length,0);
     await db.exec("reset role; set role anon");await db.exec("select set_config('request.jwt.claim.sub','',false)");
     assert.equal((await db.query<{id:string}>("select * from public.documents")).rows[0].id,SAMPLE);
@@ -112,4 +132,9 @@ test("metric denominators exclude abstentions from judge scores and count raw re
   const trial={rank:2,unanswerable:false,abstained:false,failedVerification:false,faithful:true,matched:1,attempted:2,ms:100};
   const summary=summarize([trial,{...trial,unanswerable:true,abstained:true,faithful:null,attempted:0,matched:0,ms:200}]);
   assert.deepEqual(summary,{hit_rate:1,mrr:.5,faithfulness:1,quote_verification:.5,abstention_accuracy:1,avg_latency_ms:150});
+});
+test("contradiction coverage requires every supporting passage in the top five",()=>{
+  const q={...golden[0],supporting_passages:[{page:1,quote:"north gate"},{page:2,quote:"south gate"}]};
+  assert.equal(coversContradiction(q,[chunk]),false);
+  assert.equal(coversContradiction(q,[chunk,{...chunk,spans:[span('south gate',2)]}]),true);
 });

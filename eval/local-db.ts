@@ -19,6 +19,7 @@ export async function localDatabase() {
     grant select,insert on storage.objects to authenticated;
   `);
   await db.exec(readFileSync("supabase/migrations/001_leafmark.sql","utf8"));
+  await db.exec(readFileSync("supabase/migrations/002_restrict_search.sql","utf8"));
   return db;
 }
 export async function loadIndex(db:PGlite,chunks:Indexed[],pages:number) {

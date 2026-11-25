@@ -44,6 +44,7 @@ export type Answer = {
   abstained?: boolean;
   latency_ms?: number;
   verification_failed?: boolean;
+  trace?: {chunk_id:string;file_name:string;page:number;hybrid_rank:number;reranker_score:number}[];
 };
 type Turn = { question: string; answer: Answer };
 type Library = {
@@ -53,6 +54,10 @@ type Library = {
   configured: boolean;
 };
 type Panel = "benchmarks" | "upload" | "account" | "delete";
+
+class RequestError extends Error {
+  constructor(message: string, public status: number) { super(message); }
+}
 
 async function request<T>(
   path: string,
@@ -71,10 +76,11 @@ async function request<T>(
   });
   const value = await response.json().catch(() => ({}));
   if (!response.ok)
-    throw new Error(
+    throw new RequestError(
       typeof value.error === "string"
         ? value.error
         : "The request could not be completed. Please try again.",
+      response.status,
     );
   return value as T;
 }
@@ -83,7 +89,7 @@ function reason(error: unknown) {
   return error instanceof Error ? error.message : "Something went wrong. Please try again.";
 }
 
-function InlineAnswer({ answer, select }: { answer: Answer; select: (citation: Citation) => void }) {
+function InlineAnswer({ answer, select, fileName }: { answer: Answer; select: (citation: Citation) => void; fileName:string }) {
   return (
     <div className="answer-prose">
       {answer.text
@@ -96,15 +102,23 @@ function InlineAnswer({ answer, select }: { answer: Answer; select: (citation: C
                 /^\[(\d+)\]$/.test(part) &&
                 answer.citations.find((c) => c.id === Number(part.slice(1, -1)));
               return citation ? (
+                <span className="citation-wrap" key={j}>
                 <button
                   key={j}
                   type="button"
                   className="inline-cite"
                   aria-label={`Open source ${citation.id}, page ${citation.page}`}
+                  aria-describedby={`citation-peek-${i}-${j}`}
                   onClick={() => select(citation)}
                 >
                   {part}
                 </button>
+                <span className="citation-peek" role="tooltip" id={`citation-peek-${i}-${j}`}>
+                  <span>{citation.file_name ?? fileName} · Page {citation.page}</span>
+                  <span>Relevance {citation.reranker_score == null ? "Unavailable" : citation.reranker_score.toFixed(3)}</span>
+                  <q>{citation.verbatim_quote}</q>
+                </span>
+                </span>
               ) : (
                 part
               );
@@ -214,6 +228,23 @@ export default function Workspace() {
     else dialog.current?.close();
   }, [panel]);
 
+  useEffect(() => {
+    function shortcut(event: KeyboardEvent) {
+      const target=event.target as HTMLElement | null;
+      if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || panel ||
+          target?.isContentEditable || target?.closest('input, textarea, select, dialog')) return;
+      if (event.key === '/' && ready) { event.preventDefault(); input.current?.focus(); }
+      const citation=shown?.answer.citations.find(c=>String(c.id)===event.key);
+      if (citation && /^[1-5]$/.test(event.key)) {
+        event.preventDefault();
+        setSelection(s=>({citation,revision:(s?.revision??0)+1}));
+        setMobilePdf(true);
+      }
+    }
+    window.addEventListener('keydown',shortcut);
+    return () => window.removeEventListener('keydown',shortcut);
+  }, [panel,ready,shown]);
+
   function choose(id: string) {
     revision.current++;
     setPendingQuestion("");
@@ -322,6 +353,17 @@ export default function Workspace() {
       uploadKey.current = null;
       setNotice(result.notice ?? "PDF indexed. You can now ask a question.");
     } catch (err) {
+      const incomplete=uploadKey.current;
+      if (err instanceof RequestError && (err.status === 400 || err.status === 422) && incomplete?.stored) {
+        try {
+          await request('/api/documents', token, 'DELETE', {id:incomplete.id});
+          uploadKey.current=null;
+        } catch {
+          setActionError(reason(err) + ' Delete the incomplete PDF from the source panel.');
+          setRefresh(r=>r+1);
+          return;
+        }
+      }
       setActionError(reason(err));
       setRefresh((r) => r + 1);
     } finally {
@@ -490,7 +532,7 @@ export default function Workspace() {
                     </div>
                   ) : (
                     <>
-                      <InlineAnswer answer={answer} select={select} />
+                      <InlineAnswer answer={answer} select={select} fileName={current.id === 'sample' ? 'Alder Beck Field Station.pdf' : current.name} />
                       {!!answer.citations.length && (
                         <div className="sources">
                           <h4>
@@ -521,10 +563,19 @@ export default function Workspace() {
                           onClick={() => open("benchmarks")}
                         >
                           <Check />
-                          Groundedness <b>{Math.round(answer.groundedness_score * 100)}%</b>
+                          Estimated groundedness <b>{Math.round(answer.groundedness_score * 100)}%</b>
                         </button>
                       )}
                     </>
+                  )}
+                  {!!answer.trace?.length && (
+                    <details className="retrieval-trace">
+                      <summary>Retrieval trace</summary>
+                      <ol>{answer.trace.map(row => <li key={row.chunk_id}>
+                        <span>{row.chunk_id} · page {row.page}</span>
+                        <span>RRF rank {row.hybrid_rank} · score {row.reranker_score.toFixed(3)}</span>
+                      </li>)}</ol>
+                    </details>
                   )}
                 </>
               ) : (
@@ -589,7 +640,7 @@ export default function Workspace() {
                 />
                 <div className="composer-bottom">
                   <span>
-                    <FileText /> Current PDF
+                    <FileText /> Current PDF <kbd>/</kbd> focus · <kbd>1–5</kbd> sources
                   </span>
                   <button
                     type="submit"

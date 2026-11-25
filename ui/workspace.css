@@ -274,6 +274,19 @@ body:has(.leafmark) {
   background: var(--wash);
   border-radius: 3px;
 }
+.citation-wrap { position: relative; display: inline-block; }
+.citation-peek { display: none; position: absolute; z-index: 10; bottom: calc(100% + 6px); left: 0;
+  width: min(280px, 75vw); padding: 12px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--white); color: var(--ink); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.citation-peek span, .citation-peek q { display: block; margin-bottom: 5px; overflow-wrap: anywhere; }
+.citation-wrap:hover .citation-peek, .citation-wrap:focus-within .citation-peek { display: block; }
+.retrieval-trace { margin-top: 18px; font-size: .85rem; }
+.retrieval-trace summary { cursor: pointer; color: var(--green); }
+.retrieval-trace ol { padding: 0; list-style: none; }
+.retrieval-trace li { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0;
+  border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.retrieval-trace li span:first-child, kbd { font-family: var(--mono); }
+kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 3px; }
 .sources {
   border-top: 1px solid var(--line);
   margin-top: 22px;
